@@ -10,6 +10,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
 
 
+# TODO: generic publication class to inherit from
 class BBCPublication:
     def __init__(self, title, google_news_link, publish_date):
         self.title = title
@@ -43,14 +44,14 @@ class BBCPublication:
             # Parse the HTML content
             soup = BeautifulSoup(response.content, 'html.parser')
             # Extract the headline
-            self.headline = soup.find('h1', class_='sc-518485e5-0 bWszMR').get_text()
-            # Extract all article text
+            self.headline = soup.find('h1').get_text()  # maybe class_='sc-518485e5-0 bWszMR'
+            # Extract all article text for "news/articles"
+            # Doesn't work for "sport", "weather", "news/videos"
             article_divs = soup.find_all('div', class_='sc-18fde0d6-0 dlWCEZ')
+            self.article = " ".join(div.get_text() for div in article_divs)
 
             # TODO: get author <script type="application/ld+json"> has
             #  "author": [{"@type": "Person", "name": "Kathryn Armstrong"}] in the dictionary
-
-            self.article = " ".join(div.get_text() for div in article_divs)
         except Exception as e:
             return {'Error': str(e)}
 
@@ -123,6 +124,7 @@ def get_publications():
             writer.writerow([
                 publication.headline,
                 publication.publish_date,
+                publication.news_link,
                 publication.article
             ])
 

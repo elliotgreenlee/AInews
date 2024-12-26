@@ -27,6 +27,8 @@ This code:
 
 Add your csv file. 
 
+https://chatgpt.com/share/676c824a-bfcc-800f-aab8-a0a75ba5cbdb
+
 ## Resources
 I started here
 https://www.reddit.com/r/sheets/comments/dkgmyp/pulling_data_from_google_news_to_google_sheet_how/
